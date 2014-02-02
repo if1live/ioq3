@@ -1,0 +1,147 @@
+CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
+
+PROJECT( ioq3 )
+
+# for only x86 architecture
+SET( COMPILE_ARCH x86 )
+SET( ARCH ${COMPILE_ARCH} )
+SET( VERSION 1.36 )
+
+# define
+ADD_DEFINITIONS( -DMISSIONPACK=missionpack )
+ADD_DEFINITIONS( -DBOTLIB )
+ADD_DEFINITIONS( -DFLOATING_POINT )
+ADD_DEFINITIONS( -DUSE_LOCAL_HEADERS )
+ADD_DEFINITIONS( -DUSE_INTERNAL_SPEEX )
+ADD_DEFINITIONS( -DUSE_INTERNAL_OGG )
+ADD_DEFINITIONS( -DUSE_INTERNAL_OPUS )
+ADD_DEFINITIONS( -DUSE_INTERNAL_ZLIB )
+ADD_DEFINITIONS( -DUSE_INTERNAL_JPEG )
+
+SET( IOQ3_CODE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/code )
+
+FILE( GLOB IOQ3_BOTLIB_FILES "${IOQ3_CODE_DIR}/botlib/*.*" )
+FILE( GLOB IOQ3_CGAME_FILES "${IOQ3_CODE_DIR}/cgame/*.*" )
+FILE( GLOB IOQ3_CLIENT_FILES "${IOQ3_CODE_DIR}/client/*.*" )
+
+FILE( GLOB IOQ3_GAME_FILES "${IOQ3_CODE_DIR}/game/*.*" )
+LIST( REMOVE_ITEM IOQ3_GAME_FILES 
+	"${IOQ3_CODE_DIR}/game/g_rankings.c" )
+
+FILE( GLOB IOQ3_UI_FILES "${IOQ3_CODE_DIR}/ui/*.*" )
+FILE( GLOB IOQ3_ZLIB_FILES "${IOQ3_CODE_DIR}/zlib/*.*" )
+
+FILE( GLOB IOQ3_SERVER_FILES 
+	"${IOQ3_CODE_DIR}/server/sv_bot.*"
+	"${IOQ3_CODE_DIR}/server/sv_client.*"
+	"${IOQ3_CODE_DIR}/server/sv_ccmds.*"
+	"${IOQ3_CODE_DIR}/server/sv_game.*"
+	"${IOQ3_CODE_DIR}/server/sv_init.*"
+	"${IOQ3_CODE_DIR}/server/sv_main.*"
+	"${IOQ3_CODE_DIR}/server/sv_net_chan.*"
+	"${IOQ3_CODE_DIR}/server/sv_snapshot.*"
+	"${IOQ3_CODE_DIR}/server/sv_world.*" )
+
+FILE( GLOB IOQ3_SDL_FILES "${IOQ3_CODE_DIR}/sdl/*.*" )
+FILE( GLOB IOQ3_RENDERERGL2_FILES "${IOQ3_CODE_DIR}/renderergl2/*.*" )
+FILE( GLOB IOQ3_RENDERERGL1_FILES "${IOQ3_CODE_DIR}/renderergl1/*.*" )
+FILE( GLOB IOQ3_RENDERERCOMMON_FILES "${IOQ3_CODE_DIR}/renderercommon/*.*" )
+
+FILE( GLOB IOQ3_Q3UI_FILES "${IOQ3_CODE_DIR}/q3_ui/*.*" )
+LIST( REMOVE_ITEM IOQ3_Q3UI_FILES 
+	"${IOQ3_CODE_DIR}/q3_ui/ui_rankings.c"
+	"${IOQ3_CODE_DIR}/q3_ui/ui_rankstatus.c"
+	"${IOQ3_CODE_DIR}/q3_ui/ui_signup.c" )
+	
+
+FILE( GLOB IOQ3_JPEG_FILES "${IOQ3_CODE_DIR}/jpeg-8c/*.*" )	
+
+FILE( GLOB IOQ3_SPEEX_FILES 
+	"${IOQ3_CODE_DIR}/libspeex/*.c"
+	"${IOQ3_CODE_DIR}/libspeex/*.h"	)
+LIST( REMOVE_ITEM IOQ3_SPEEX_FILES
+	"${IOQ3_CODE_DIR}/libspeex/testdenoise.c"
+	"${IOQ3_CODE_DIR}/libspeex/testecho.c"
+	"${IOQ3_CODE_DIR}/libspeex/testenc.c"
+	"${IOQ3_CODE_DIR}/libspeex/testenc_uwb.c"
+	"${IOQ3_CODE_DIR}/libspeex/testenc_wb.c" )
+	
+FILE( GLOB IOQ3_QCOMMON_FILES 
+	"${IOQ3_CODE_DIR}/qcommon/cm_*.*"
+	"${IOQ3_CODE_DIR}/qcommon/cmd.*"
+	"${IOQ3_CODE_DIR}/qcommon/common.*"
+	"${IOQ3_CODE_DIR}/qcommon/cvar.*"
+	"${IOQ3_CODE_DIR}/qcommon/files.*"
+	"${IOQ3_CODE_DIR}/qcommon/huffman.*"
+	"${IOQ3_CODE_DIR}/qcommon/ioapi.*"
+	"${IOQ3_CODE_DIR}/qcommon/md4.*"
+	"${IOQ3_CODE_DIR}/qcommon/md5.*"
+	"${IOQ3_CODE_DIR}/qcommon/msg.*"
+	"${IOQ3_CODE_DIR}/qcommon/net_*.*"
+	"${IOQ3_CODE_DIR}/qcommon/puff.*"
+	"${IOQ3_CODE_DIR}/qcommon/q_*.*"
+	"${IOQ3_CODE_DIR}/qcommon/qcommon.*"
+	"${IOQ3_CODE_DIR}/qcommon/qfiles.*"
+	"${IOQ3_CODE_DIR}/qcommon/surfaceflags.*"
+	"${IOQ3_CODE_DIR}/qcommon/unzip.*" 
+	
+	"${IOQ3_CODE_DIR}/qcommon/vm.c"
+	"${IOQ3_CODE_DIR}/qcommon/vm_interpreted.c"
+	"${IOQ3_CODE_DIR}/qcommon/vm_local.h"
+	"${IOQ3_CODE_DIR}/qcommon/vm_x86.c" )
+	
+FILE( GLOB IOQ3_SYS_FILES 
+	"${IOQ3_CODE_DIR}/sys/con_log.*"	
+	"${IOQ3_CODE_DIR}/sys/con_passive.*"
+	"${IOQ3_CODE_DIR}/sys/sys_local.*"
+	"${IOQ3_CODE_DIR}/sys/sys_loadlib.*"
+	"${IOQ3_CODE_DIR}/sys/sys_main.*"
+	"${IOQ3_CODE_DIR}/sys/sys_win32.*" )
+	
+FILE( GLOB IOQ3_ASM_FILES "${IOQ3_CODE_DIR}/asm/*.*" )
+
+INCLUDE_DIRECTORIES( ${IOQ3_CODE_DIR}/libcurl )
+INCLUDE_DIRECTORIES( ${IOQ3_CODE_DIR}/AL )
+INCLUDE_DIRECTORIES( ${IOQ3_CODE_DIR}/SDL12/include )
+INCLUDE_DIRECTORIES( ${IOQ3_CODE_DIR}/libspeex/include )
+INCLUDE_DIRECTORIES( ${IOQ3_CODE_DIR}/jpeg-8c )
+
+LINK_DIRECTORIES( ${IOQ3_CODE_DIR}/libs/win32-msvc/ )
+
+ADD_LIBRARY( cgame 
+	${IOQ3_CGAME_FILES} 
+	${IOQ3_QCOMMON_FILES} )
+
+ADD_LIBRARY( game ${IOQ3_GAME_FILES} )
+
+
+ADD_LIBRARY( q3_ui ${IOQ3_Q3UI_FILES} )
+	
+ADD_LIBRARY( ui ${IOQ3_UI_FILES} )
+
+ADD_EXECUTABLE( quake
+	${IOQ3_BOTLIB_FILES}
+	${IOQ3_JPEG_FILES}
+	${IOQ3_RENDERERCOMMON_FILES}
+	${IOQ3_RENDERERGL1_FILES}
+	#${IOQ3_RENDERERGL2_FILES}
+	${IOQ3_SPEEX_FILES}
+	${IOQ3_ZLIB_FILES} 
+	${IOQ3_SYS_FILES} 
+	${IOQ3_CLIENT_FILES}
+	${IOQ3_SERVER_FILES} 
+	${IOQ3_ASM_FILES} 
+	${IOQ3_SDL_FILES} )
+	
+TARGET_LINK_LIBRARIES( quake
+	SDL
+	SDLmain
+	cgame
+	game
+	q3_ui
+	ui
+	opengl32
+	wsock32
+	Ws2_32
+	Winmm
+	psapi )

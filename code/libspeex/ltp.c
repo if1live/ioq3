@@ -55,6 +55,10 @@
 #include "ltp_bfin.h"
 #endif
 
+#ifdef _MSC_VER
+#define inline
+#endif
+
 #ifndef OVERRIDE_INNER_PROD
 spx_word32_t inner_prod(const spx_word16_t *x, const spx_word16_t *y, int len)
 {
@@ -837,3 +841,7 @@ int cdbk_offset
    gain_val[0]=gain_val[2]=0;
    gain_val[1] = pitch_coef;
 }
+
+#ifdef _MSC_VER
+#undef inline
+#endif

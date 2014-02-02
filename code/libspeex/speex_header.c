@@ -44,6 +44,10 @@
 #define NULL 0
 #endif
 
+#ifdef _MSC_VER
+#define inline
+#endif
+
 /** Convert little endian */
 static inline spx_int32_t le_int(spx_int32_t i)
 {
@@ -186,3 +190,7 @@ void speex_header_free(void *ptr)
 {
    speex_free(ptr);
 }
+
+#ifdef _MSC_VER
+#undef inline
+#endif

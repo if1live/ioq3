@@ -45,6 +45,11 @@
 #include "os_support_custom.h"
 #endif
 
+//msvc can't compile "static inline"
+#ifdef _MSC_VER
+#define inline
+#endif
+
 /** Speex wrapper for calloc. To do your own dynamic allocation, all you need to do is replace this function, speex_realloc and speex_free 
     NOTE: speex_alloc needs to CLEAR THE MEMORY */
 #ifndef OVERRIDE_SPEEX_ALLOC
@@ -163,6 +168,10 @@ static inline void print_vec(float *vec, int len, char *name)
       printf (" %f", vec[i]);
    printf ("\n");
 }
+#endif
+
+#ifdef _MSC_VER
+#undef inline
 #endif
 
 #endif
