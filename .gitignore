@@ -35,3 +35,4 @@ profile
 
 # CMake
 build
+bin/*
