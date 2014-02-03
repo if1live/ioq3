@@ -119,10 +119,6 @@ static const spx_float_t VAR_BACKTRACK = 4.f;
 
 #define PLAYBACK_DELAY 2
 
-#ifdef _MSC_VER
-#define inline
-#endif
-
 void speex_echo_get_residual(SpeexEchoState *st, spx_word32_t *Yout, int len);
 
 
@@ -1179,8 +1175,3 @@ int speex_echo_ctl(SpeexEchoState *st, int request, void *ptr)
    }
    return 0;
 }
-
-
-#ifdef _MSC_VER
-#undef inline
-#endif
