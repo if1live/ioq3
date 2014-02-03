@@ -45,11 +45,6 @@
 #define spx_cos_norm(x) (cos((.5f*M_PI)*(x)))
 #define spx_atan atan
 
-//msvc can't compile "static inline"
-#ifdef _MSC_VER
-#define inline
-#endif
-
 /** Generate a pseudo-random number */
 static inline spx_word16_t speex_rand(spx_word16_t std, spx_int32_t *seed)
 {
@@ -333,9 +328,5 @@ static inline spx_word16_t spx_cos(spx_word16_t x)
 
 #endif
 
-
-#ifdef _MSC_VER
-#undef inline
-#endif
 
 #endif

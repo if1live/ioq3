@@ -34,5 +34,12 @@ profile
 !default.perspectivev3
 
 # CMake
+####################
 build
 bin/*
+
+# Visual Studio
+####################
+*.suo
+*.vcxproj
+*.sdf

@@ -92,10 +92,6 @@
 #define SQR16(x) (MULT16_16((x),(x)))
 #define SQR16_Q15(x) (MULT16_16_Q15((x),(x)))
 
-#ifdef _MSC_VER
-#define inline
-#endif
-
 #ifdef FIXED_POINT
 static inline spx_word16_t DIV32_16_Q8(spx_word32_t a, spx_word32_t b)
 {
@@ -1187,7 +1183,3 @@ int speex_preprocess_ctl(SpeexPreprocessState *state, int request, void *ptr)
    }
    return 0;
 }
-
-#ifdef _MSC_VER
-#undef inline
-#endif

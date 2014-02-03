@@ -49,10 +49,6 @@
 #include "cb_search_bfin.h"
 #endif
 
-#ifdef _MSC_VER
-#define inline
-#endif
-
 #ifndef OVERRIDE_COMPUTE_WEIGHTED_CODEBOOK
 static void compute_weighted_codebook(const signed char *shape_cb, const spx_word16_t *r, spx_word16_t *resp, spx_word16_t *resp2, spx_word32_t *E, int shape_cb_size, int subvect_size, char *stack)
 {
@@ -615,8 +611,3 @@ spx_int32_t *seed
    for (i=0;i<nsf;i++)
       exc[i]=SHL32(EXTEND32(speex_rand(1, seed)),SIG_SHIFT);
 }
-
-
-#ifdef _MSC_VER
-#undef inline
-#endif
